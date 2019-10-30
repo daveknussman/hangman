@@ -3,9 +3,9 @@ const wordBank = require("./word-bank.json");
 
 let solved = false;
 let lost = false;
-let answer = ' ';
+let answer = [];
 let guesses = [];
-let userWordDisplay = ' ';
+let progress = [];
 let j = 0;
 
 const findIt = (arr, arg) => {
@@ -14,25 +14,25 @@ const findIt = (arr, arg) => {
 };
 
 // Get answer
-while (answer === ' ') {
+while (answer.length === 0) {
     let answerIdx = Math.floor(Math.random() * 1000) + 1;
     if (wordBank[answerIdx]){
-        answer = wordBank[answerIdx];  
+        answer = Array.from(wordBank[answerIdx]);  
     }
-    // console.log(answer);
-};
-
-// Init userWord display
-for (i=0;i<answer.length;i++) {
-    userWordDisplay += '_ ';
 }
 
-// welcome
+// Init progress 
+for (i=0;i<answer.length;i++) {
+    progress.push('_');
+}
+
+// Welcome
+console.clear();
 console.log('Welcome to Hangman.  Good luck.');
 console.log('Try to guess this word:'+ "\n");
-console.log(userWordDisplay + "\n");
+console.log(progress.join(' ') + "\n");
 
-// Run the game until the user solves it or loses
+// Run the game until the user solves it or loses (ctrl+c will break out)
 while ((!solved) && (!lost)) {
     // Get the guess
     let guess = prompt.question("Please guess a letter: ").substring(0,1);
@@ -47,12 +47,16 @@ while ((!solved) && (!lost)) {
         console.log('Already used that letter.  Try again please');
         continue;
     } else {
+        // Add new guess into guesses
         guesses.push(guess);
     }
     
+    // Process new guess
+
+    
     j += 1; 
     if (j>5) solved=true;
-};
+}
 
 // console.log(wordBank);
 // console.log(wordBank[7]);
