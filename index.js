@@ -1,5 +1,12 @@
+// includes
 const prompt = require("readline-sync");
 const wordBank = require("./word-bank.json");
+
+//game display lines
+let hangmanTop  = '_____';    
+let hangmanRope = '|     |'; 
+let hangmanPole = '|'; 
+let hangmanBase = '_________';
 
 let solved = false;            //puzzle solved
 let lost = false;              //game lost 
@@ -14,11 +21,22 @@ let correctGuess = false;      //guess outcome
 let badGuessTotal = 0;         //number of incorrect guesses
 let j = 0;
 
+// functions to use
+function showHangman (errors) {
+    console.log(hangmanTop);
+    console.log(hangmanRope);
+    (errors > 0) ? console.log(hangmanPole + '     o' ) : console.log(hangmanPole);
+    (errors > 3) ? console.log(hangmanPole + "    /|\\") : (errors > 2) ? console.log(hangmanPole + "    /|") : (errors > 1) ? console.log(hangmanPole + "     |") : console.log(hangmanPole);
+    (errors > 5) ? console.log(hangmanPole + '    / \\' ) : (errors > 4) ? console.log(hangmanPole + '    /') : console.log(hangmanPole) ;
+    console.log(hangmanBase);
+};
+
 const findIt = (arr, arg) => {
     let found = arr.find(itm => itm === arg);
     return found;
 };
 
+// ****************** Main Program Logic *********************
 // Get answer
 while (answer.length === 0) {
     let answerIdx = Math.floor(Math.random() * 1000) + 1;
@@ -32,15 +50,25 @@ for (i=0;i<answer.length;i++) {
     progress.push('_');
 }
 
-// Welcome
-console.clear();
-console.log('Welcome to Hangman.  Good luck.');
-console.log('Try to guess this word:'+ "\n");
-console.log(answer);
-console.log(progress.join(' ') + "\n");
+// // Welcome
+// console.clear();
+// console.log('Welcome to Hangman.  Good luck.');
+// console.log('Try to guess this word:'+ "\n");
+// showHangman(badGuessTotal);
+// console.log(answer);
+// console.log(progress.join(' ') + "\n");
 
 // Run the game until the user solves it or loses (ctrl+c will break out)
 while ((!solved) && (!lost)) {
+    // Welcome
+    console.clear();
+    console.log('Welcome to Hangman.  Good luck.');
+    console.log('Try to guess this word:'+ "\n");
+    showHangman(badGuessTotal);
+    console.log("\n");
+    console.log(progress.join(' ') + "\n\n");
+    console.log(answer);
+
     
     // Get the guess
     let guess = prompt.question("Please guess a letter: ").substring(0,1);
@@ -87,17 +115,15 @@ while ((!solved) && (!lost)) {
     }  else {
         badGuessTotal += 1;
         console.log('Sorry, that guess is incorrect');
-        // Paint hangman
         if (badGuessTotal > badGuessesAllowed) {
             console.log('You are out of guesses.  You lose.');
             lost = true;
+            // showHangman(badGuessTotal);
         }
     }
 
-    // console.log(progress);
-
-
-
-    
+    // showHangman(badGuessTotal);
+    // console.log(progress.join(' ') + "\n");
+      
 
 }
