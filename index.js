@@ -46,6 +46,7 @@ function showHangman (errors,feedbackType) {
             break;
         case 'wrong' :
             console.log('Sorry, that guess is incorrect');
+            console.log('You have ' + (6 - badGuessTotal) + ' incorrect guesses remaining');
             break;
         case 'won' :
             console.log('You win!!!!!!!'  + "\n");
@@ -56,6 +57,7 @@ function showHangman (errors,feedbackType) {
             console.log('Thanks for playing!'); 
     };
     console.log(progress.join(' ') + "\n\n");
+    if (guesses.length > 0) console.log('Your guesses: ' + guesses.join(' ') + "\n\n");
 };
 
 const findIt = (arr, arg) => {
