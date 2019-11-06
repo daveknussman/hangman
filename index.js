@@ -8,6 +8,7 @@ let hangmanRope = "|     |";
 let hangmanPole = "|";
 let hangmanBase = "_________";
 
+// variables used
 let playing = true; //user keeps playing
 let roundsTotal = 0; //rounds played
 let roundsWon = 0; //rounds won
@@ -59,21 +60,9 @@ function showHangman(errors, feedbackType) {
       break;
     case "correct":
       console.log("Congratulations, you guessed well!!!" + "\n");
-      console.log(
-        "You have " +
-          (6 - badGuessTotal) +
-          " incorrect guesses remaining" +
-          "\n"
-      );
       break;
     case "wrong":
       console.log("Sorry, that guess is incorrect" + "\n");
-      console.log(
-        "You have " +
-          (6 - badGuessTotal) +
-          " incorrect guesses remaining" +
-          "\n"
-      );
       break;
     case "won":
       console.log("You win!!!!!!!" + "\n");
@@ -86,6 +75,15 @@ function showHangman(errors, feedbackType) {
       console.log("You've won " + roundsWon + " of " + roundsTotal + "\n");
       console.log("Thanks for playing!" + "\n");
   }
+  if ((feedbackType !== 'won') && (feedbackType !== 'lost') && (feedbackType !== ' ')) {
+    console.log(
+      "You have " +
+        (6 - badGuessTotal) +
+        " incorrect guesses remaining" +
+        "\n"
+    );
+  } 
+
 }
 
 const findIt = (arr, arg) => {
